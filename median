@@ -1,0 +1,19 @@
+classes <- c("1-5", "5-15", "15-20", "20-50", "50-80", "80-110")
+freq <- c(200, 450, 300, 1500, 700, 44)
+
+cum_freq <- cumsum(freq)
+
+N <- sum(freq)
+
+N_half <- N / 2
+
+median_class_index <- which(cum_freq >= N_half)[1]
+
+L <- c(1, 5, 15, 20, 50, 80)[median_class_index]  # Lower boundary of median class
+CF <- ifelse(median_class_index > 1, cum_freq[median_class_index - 1], 0)  # CF before median class
+f <- freq[median_class_index]  # Frequency of median class
+h <- c(4, 10, 5, 30, 30, 30)[median_class_index]  # Class width
+
+median_value <- L + ((N_half - CF) / f) * h
+
+cat("The approximate median age is:", round(median_value, 2), "years\n")
